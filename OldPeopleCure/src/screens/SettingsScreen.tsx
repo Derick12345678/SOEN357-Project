@@ -6,16 +6,9 @@ import { useTheme } from '../utils/ThemeContext';
 import { globalStyles } from '../styles/GlobalStyles';
 
 export const SettingsScreen: React.FC = () => {
-  const { fontSizeScale, setFontSizeScale, highContrast, setHighContrast, getColors } = useTheme();
+  const { highContrast, setHighContrast, getColors, decreaseFont, increaseFont } = useTheme();
   const colors = getColors();
 
-  const increaseFont = () => {
-    if (fontSizeScale < 1.6) setFontSizeScale(fontSizeScale + 0.1);
-  };
-
-  const decreaseFont = () => {
-    if (fontSizeScale > 0.8) setFontSizeScale(fontSizeScale - 0.1);
-  };
 
   return (
     <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]}>

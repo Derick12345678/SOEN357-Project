@@ -13,7 +13,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ArticleDetail'>;
 export const ArticleDetailScreen: React.FC<Props> = ({ route, navigation }) => {
   const { articleId } = route.params;
   const article = mockArticles.find(a => a.id === articleId);
-  const { getColors, fontSizeScale, setFontSizeScale } = useTheme();
+  const { getColors, fontSizeScale, increaseFont, decreaseFont, decreaseFontButtonDisabled, increaseFontButtonDisabled } = useTheme();
   const colors = getColors();
 
   if (!article) return <View><AccessibleText>Not Found</AccessibleText></View>;
@@ -21,30 +21,30 @@ export const ArticleDetailScreen: React.FC<Props> = ({ route, navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       {/* Utility Bar */}
-      <View style={[styles.utilsBar, { backgroundColor: colors.surface, borderBottomColor: colors.border, borderBottomWidth: 1 }]}>
-        <AccessibleText bold>Text Size:</AccessibleText>
-        <View style={styles.row}>
-          <LargeButton title="A-" onPress={() => setFontSizeScale(Math.max(0.8, fontSizeScale - 0.1))} style={styles.smallBtn} />
-          <View style={{ width: 10 }} />
-          <LargeButton title="A+" onPress={() => setFontSizeScale(Math.min(1.6, fontSizeScale + 0.1))} style={styles.smallBtn} />
-        </View>
-      </View>
 
       <ScrollView style={[globalStyles.container]} contentContainerStyle={styles.content}>
-        <AccessibleText bold style={styles.title}>{article.title}</AccessibleText>
+        <AccessibleText baseSize={32} bold style={styles.title}>{article.title}</AccessibleText>
         <AccessibleText style={styles.category}>Category: {article.category}</AccessibleText>
-        
+
         <View style={[styles.divider, { backgroundColor: colors.border }]} />
-        
+
         <AccessibleText style={styles.body}>{article.content}</AccessibleText>
-        
-        <LargeButton 
-          title="⬅️ Go Back" 
-          onPress={() => navigation.goBack()} 
+
+        <LargeButton
+          title="⬅️ Go Back"
+          onPress={() => navigation.goBack()}
           colorType="secondary"
           style={{ marginTop: 40 }}
         />
       </ScrollView>
+      <View style={[styles.utilsBar, { backgroundColor: colors.surface, borderBottomColor: colors.border, borderBottomWidth: 1 }]}>
+        <AccessibleText bold>Text Size:</AccessibleText>
+        <View style={styles.row}>
+          <LargeButton title="A-" onPress={decreaseFont} style={styles.smallBtn} disabled={decreaseFontButtonDisabled} />
+          <View style={{ width: 10 }} />
+          <LargeButton title="A+" onPress={increaseFont} style={styles.smallBtn} disabled={increaseFontButtonDisabled} />
+        </View>
+      </View>
     </View>
   );
 };
@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   title: {
-    fontSize: 32,
-    marginBottom: 8,
+    marginBottom: 8, // setting font here will prevent the accessibility feature to increase font size
   },
   category: {
     marginBottom: 20,

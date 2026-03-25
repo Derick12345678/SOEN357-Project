@@ -13,4 +13,10 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  flexWrap: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 10,
+    flexDirection: "row"
+  }
 });

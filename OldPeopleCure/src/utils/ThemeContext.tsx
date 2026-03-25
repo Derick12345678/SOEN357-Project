@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import * as Haptics from 'expo-haptics';
 
 interface ThemeContextType {
   fontSizeScale: number;
@@ -6,6 +7,10 @@ interface ThemeContextType {
   highContrast: boolean;
   setHighContrast: (enabled: boolean) => void;
   getColors: () => { background: string; text: string; primary: string; secondary: string; border: string; surface: string };
+  increaseFont: () => void;
+  increaseFontButtonDisabled: boolean;
+  decreaseFont: () => void;
+  decreaseFontButtonDisabled: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -13,6 +18,21 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [fontSizeScale, setFontSizeScale] = useState(1);
   const [highContrast, setHighContrast] = useState(false);
+const increaseFontButtonDisabled = fontSizeScale >= 1.6;
+const decreaseFontButtonDisabled = fontSizeScale <= 0.8;
+const increaseFont = async () => {
+  if (!increaseFontButtonDisabled) {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setFontSizeScale(prev => prev + 0.1);
+  }
+};
+
+const decreaseFont = async () => {
+  if (!decreaseFontButtonDisabled) {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setFontSizeScale(prev => prev - 0.1);
+  }
+};
 
   const getColors = () => {
     if (highContrast) {
@@ -36,7 +56,17 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ fontSizeScale, setFontSizeScale, highContrast, setHighContrast, getColors }}>
+    <ThemeContext.Provider value={{ 
+        fontSizeScale, 
+        setFontSizeScale, 
+        highContrast, 
+        setHighContrast, 
+        getColors, 
+        increaseFont, 
+        increaseFontButtonDisabled,
+        decreaseFont,
+        decreaseFontButtonDisabled
+      }}>
       {children}
     </ThemeContext.Provider>
   );

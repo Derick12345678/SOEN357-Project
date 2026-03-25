@@ -5,14 +5,12 @@ import { useTheme } from '../utils/ThemeContext';
 interface AccessibleTextProps extends TextProps {
   style?: any;
   bold?: boolean;
+  baseSize?: number;
 }
 
-export const AccessibleText: React.FC<AccessibleTextProps> = ({ children, style, bold, ...props }) => {
+export const AccessibleText: React.FC<AccessibleTextProps> = ({ children, style, bold, baseSize = 22, ...props }) => {
   const { fontSizeScale, getColors } = useTheme();
   const colors = getColors();
-
-  // The design rules state minimum 18-22pt. This guarantees big default.
-  const baseSize = 22; 
 
   return (
     <Text
@@ -22,7 +20,7 @@ export const AccessibleText: React.FC<AccessibleTextProps> = ({ children, style,
           fontSize: baseSize * fontSizeScale,
           color: colors.text,
           fontWeight: bold ? 'bold' : 'normal',
-          lineHeight: baseSize * fontSizeScale * 1.4,
+          lineHeight: baseSize * fontSizeScale * 1.8, // if too small then some text will be cut off
         },
         style,
       ]}

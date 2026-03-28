@@ -18,21 +18,21 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [fontSizeScale, setFontSizeScale] = useState(1);
   const [highContrast, setHighContrast] = useState(false);
-const increaseFontButtonDisabled = fontSizeScale >= 1.6;
-const decreaseFontButtonDisabled = fontSizeScale <= 0.8;
-const increaseFont = async () => {
-  if (!increaseFontButtonDisabled) {
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setFontSizeScale(prev => prev + 0.1);
-  }
-};
+  const increaseFontButtonDisabled = fontSizeScale >= 1.6;
+  const decreaseFontButtonDisabled = fontSizeScale <= 0.8;
+  const increaseFont = async () => {
+    if (!increaseFontButtonDisabled) {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      setFontSizeScale(prev => prev + 0.1);
+    }
+  };
 
-const decreaseFont = async () => {
-  if (!decreaseFontButtonDisabled) {
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setFontSizeScale(prev => prev - 0.1);
-  }
-};
+  const decreaseFont = async () => {
+    if (!decreaseFontButtonDisabled) {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      setFontSizeScale(prev => prev - 0.1);
+    }
+  };
 
   const getColors = () => {
     if (highContrast) {
@@ -49,24 +49,24 @@ const decreaseFont = async () => {
       background: '#F0F8FF', // Alice Blue, very soft light background
       text: '#000000',      // Maximum contrast for typical mode
       primary: '#0047AB',    // Deep cobalt blue
-      secondary: '#486581',  
+      secondary: '#486581',
       border: '#BCCCDC',
       surface: '#FFFFFF',
     };
   };
 
   return (
-    <ThemeContext.Provider value={{ 
-        fontSizeScale, 
-        setFontSizeScale, 
-        highContrast, 
-        setHighContrast, 
-        getColors, 
-        increaseFont, 
-        increaseFontButtonDisabled,
-        decreaseFont,
-        decreaseFontButtonDisabled
-      }}>
+    <ThemeContext.Provider value={{
+      fontSizeScale,
+      setFontSizeScale,
+      highContrast,
+      setHighContrast,
+      getColors,
+      increaseFont,
+      increaseFontButtonDisabled,
+      decreaseFont,
+      decreaseFontButtonDisabled
+    }}>
       {children}
     </ThemeContext.Provider>
   );

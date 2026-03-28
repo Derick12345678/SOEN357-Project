@@ -7,6 +7,8 @@ import { LargeButton } from '../components/LargeButton';
 import { mockVideos } from '../data/mockData';
 import { useTheme } from '../utils/ThemeContext';
 import { globalStyles } from '../styles/GlobalStyles';
+import { VideoCard } from '../components/VideoCard';
+import { useResponsiveGrid } from '../hooks/useResponsiveGrid';
 
 type VideosScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Videos'>;
 
@@ -17,22 +19,27 @@ interface Props {
 export const VideosScreen: React.FC<Props> = ({ navigation }) => {
   const { getColors } = useTheme();
   const colors = getColors();
+  const { itemWidth, gap } = useResponsiveGrid({
+    minItemWidth: 160,
+    gap: 10,
+    horizontalPadding: 48
+  });
 
   return (
     <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
       <AccessibleText style={styles.header}>
         Choose a video to watch
       </AccessibleText>
-      
-      {mockVideos.map((video) => (
-        <View key={video.id} style={styles.card}>
-          <LargeButton
-            title={`${video.thumbnail} ${video.title}`}
-            onPress={() => navigation.navigate('VideoPlayer', { videoId: video.id })}
-            colorType="secondary"
-          />
-        </View>
+
+      <View style={globalStyles.flexWrap}>
+        {mockVideos.map((video) => (
+        <VideoCard
+          key={video.id}
+          video={video}
+          style={{ width: itemWidth, marginBottom: gap}}
+        />
       ))}
+      </View>
     </ScrollView>
   );
 };

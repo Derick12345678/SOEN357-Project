@@ -33,6 +33,6 @@ export const AccessibleText: React.FC<AccessibleTextProps> = ({ children, style,
 
 const styles = StyleSheet.create({
   text: {
-    // line-height is now scaled dynamically inline to prevent cut-offs
+    
   },
 });

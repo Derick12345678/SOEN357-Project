@@ -42,13 +42,13 @@ export const LargeButton: React.FC<LargeButtonProps> = ({ title, onPress, style,
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 80, // Very large touch target to guarantee readability and easy tap
+    minHeight: 80, 
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 16,
-    marginVertical: 12, // Big spacing between elements 
+    marginVertical: 12, 
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

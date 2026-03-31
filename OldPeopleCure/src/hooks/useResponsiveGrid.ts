@@ -14,13 +14,11 @@ export const useResponsiveGrid = (config?: GridConfig) => {
 
   const availableWidth = width - horizontalPadding;
 
-  // 👇 KEY FIX: don't include gap in divisor
   const numColumns = Math.max(
     1,
     Math.floor(availableWidth / minItemWidth)
   );
 
-  // 👇 THEN subtract gaps AFTER
   const totalGapWidth = gap * (numColumns - 1);
 
   const itemWidth =

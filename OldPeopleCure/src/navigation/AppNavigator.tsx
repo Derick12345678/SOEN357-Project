@@ -18,7 +18,7 @@ export type RootStackParamList = {
   Articles: undefined;
   ArticleDetail: { articleId: string };
   Videos: undefined;
-  VideoPlayer: { videoId: string };
+  VideoPlayer: { videoId: string, title: string };
   Games: undefined;
   MemoryGame: undefined;
   Sudoku: undefined;
@@ -41,7 +41,7 @@ export const AppNavigator = () => {
           headerTintColor: colors.primary === '#FFFF00' ? '#000000' : '#FFFFFF',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 24, // High visibility header mapping
+            fontSize: 24,
           },
         }}
       >

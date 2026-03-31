@@ -44,20 +44,38 @@ export const mockArticles = [
 export const mockVideos = [
   {
     id: '1',
-    title: 'Nature Documentary: The Ocean',
-    thumbnail: 'https://img.youtube.com/vi/6zrn4-FfbXw/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=6zrn4-FfbXw',
+    title: 'Shark Tank',
+    thumbnail: 'https://img.youtube.com/vi/7TEx2oXFDBM/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=7TEx2oXFDBM',
   },
   {
     id: '2',
-    title: 'Classic Cars of the 1960s',
-    thumbnail: 'https://img.youtube.com/vi/j9s8q6Q3xFk/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=j9s8q6Q3xFk',
+    title: 'Call your name (song)',
+    thumbnail: 'https://img.youtube.com/vi/glCgRS8eGhs/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=glCgRS8eGhs',
   },
   {
     id: '3',
-    title: 'Easy Gardening Tips',
-    thumbnail: 'https://img.youtube.com/vi/8n7yYfHq2jQ/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=8n7yYfHq2jQ',
+    title: 'Mac vs Windows',
+    thumbnail: 'https://img.youtube.com/vi/aJSK3HZlvnU/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=aJSK3HZlvnU',
+  },
+  {
+    id: '4',
+    title: 'Veritasium Paradox',
+    thumbnail: 'https://img.youtube.com/vi/Ol18JoeXlVI/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=Ol18JoeXlVI',
+  },
+  {
+    id: '5',
+    title: 'UConn vs Duke Ending',
+    thumbnail: 'https://img.youtube.com/vi/OCCPHNKURVk/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=OCCPHNKURVk',
+  },
+  {
+    id: '6',
+    title: 'Hans Zimmer Soundtrack',
+    thumbnail: 'https://img.youtube.com/vi/IqiTJK_uzUY/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=IqiTJK_uzUY',
   },
 ];

@@ -37,7 +37,7 @@ export const SettingsScreen: React.FC = () => {
             onValueChange={setHighContrast}
             trackColor={{ false: '#767577', true: '#4CAF50' }}
             thumbColor={highContrast ? '#FFFFFF' : '#f4f3f4'}
-            style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], marginRight: 10 }} // Make switch bigger
+            style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], marginRight: 10 }} 
           />
         </View>
       </View>

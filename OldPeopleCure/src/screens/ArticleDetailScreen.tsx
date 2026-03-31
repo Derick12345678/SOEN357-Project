@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   title: {
-    marginBottom: 8, // setting font here will prevent the accessibility feature to increase font size
+    marginBottom: 8, 
   },
   category: {
     marginBottom: 20,

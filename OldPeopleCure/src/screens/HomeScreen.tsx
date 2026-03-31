@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   greeting: {
-    fontSize: 36, // Exceptionally large for Home greeting
+    fontSize: 36, 
     marginBottom: 12,
     textAlign: 'center',
   },

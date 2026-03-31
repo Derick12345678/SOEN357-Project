@@ -39,16 +39,16 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       return {
         background: '#000000',
         text: '#FFFFFF',
-        primary: '#FFFF00', // Highly visible yellow on black
-        secondary: '#00FFFF', // Cyan
+        primary: '#FFFF00',
+        secondary: '#00FFFF',
         border: '#FFFFFF',
         surface: '#222222',
       };
     }
     return {
-      background: '#F0F8FF', // Alice Blue, very soft light background
-      text: '#000000',      // Maximum contrast for typical mode
-      primary: '#0047AB',    // Deep cobalt blue
+      background: '#F0F8FF', 
+      text: '#000000',      
+      primary: '#0047AB',    
       secondary: '#486581',
       border: '#BCCCDC',
       surface: '#FFFFFF',

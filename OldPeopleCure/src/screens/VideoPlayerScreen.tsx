@@ -12,16 +12,14 @@ import { useTheme } from '../utils/ThemeContext';
 type Props = NativeStackScreenProps<RootStackParamList, 'VideoPlayer'>;
 
 export const VideoPlayerScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { videoId } = route.params;
-  const video = mockVideos.find(v => v.id === videoId);
+const { videoId, title } = route.params;
 
   const { getColors } = useTheme();
   const colors = getColors();
 
-  // ✅ Autoplay ON
   const [isPlaying, setIsPlaying] = useState(true);
 
-  if (!video) {
+  if (!videoId) {
     return (
       <View>
         <AccessibleText>Video Not Found</AccessibleText>
@@ -34,7 +32,6 @@ export const VideoPlayerScreen: React.FC<Props> = ({ route, navigation }) => {
     return match ? match[1] : '';
   };
 
-  const videoIdFromUrl = getYoutubeId(video.videoUrl);
 
   const onStateChange = useCallback((state: string) => {
     if (state === 'ended') {
@@ -45,33 +42,21 @@ export const VideoPlayerScreen: React.FC<Props> = ({ route, navigation }) => {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
 
-      {/* 🔥 Title ABOVE video */}
       <AccessibleText bold style={styles.title}>
-        {video.title}
+        {title}
       </AccessibleText>
 
-      {/* 🎬 Video */}
       <View style={styles.videoWrapper}>
         <YoutubePlayer
-          key={videoIdFromUrl} // 👈 important
+          key={videoId} 
           height={250}
           play={isPlaying}
-          videoId={videoIdFromUrl}
+          videoId={videoId}
           onChangeState={onStateChange}
         />
       </View>
 
-      {/* Controls */}
       <View style={styles.controls}>
-        {/* <LargeButton
-          title={isPlaying ? "⏸️ Pause Video" : "▶️ Play Video"}
-          onPress={async () => {
-            await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            setIsPlaying(prev => !prev);
-          }}
-          colorType="primary"
-        /> */}
-
         <LargeButton
           title="⬅️ Go Back"
           onPress={async () => {

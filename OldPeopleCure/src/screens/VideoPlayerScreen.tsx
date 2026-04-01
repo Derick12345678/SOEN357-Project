@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import * as Haptics from 'expo-haptics';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -40,8 +40,7 @@ const { videoId, title } = route.params;
   }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
       <AccessibleText bold style={styles.title}>
         {title}
       </AccessibleText>
@@ -67,15 +66,18 @@ const { videoId, title } = route.params;
           style={{ marginTop: 20 }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
     padding: 24,
     justifyContent: 'center',
+    flexGrow: 1,
   },
 
   title: {

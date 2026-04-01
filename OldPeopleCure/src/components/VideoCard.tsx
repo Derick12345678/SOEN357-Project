@@ -30,22 +30,30 @@ export const VideoCard = ({ video, style, fontSizeScale = 1, navigation }: any) 
         {
           backgroundColor: colors.surface,
           borderRadius: 14 * fontSizeScale,
+          height: 175 * fontSizeScale,
         },
         style,
       ]}
       activeOpacity={0.85}
       onPress={handlePress}
     >
-      <Image
-        source={{ uri: video.thumbnail }}
-        style={{
-          width: '100%',
-          height: imageHeight,
-        }}
-        resizeMode="cover"
-      />
+      <View>
+        <Image
+          source={{ uri: video.thumbnail }}
+          style={{
+            width: '100%',
+            height: imageHeight,
+          }}
+          resizeMode="cover"
+        />
+        <View style={styles.playOverlay}>
+          <View style={styles.playButton}>
+            <AccessibleText style={styles.playIcon}>▶</AccessibleText>
+          </View>
+        </View>
+      </View>
 
-      <View style={{ padding: 10 * fontSizeScale }}>
+      <View style={{ padding: 10 * fontSizeScale, flex: 1, justifyContent: 'center' }}>
         <AccessibleText
           numberOfLines={2}
           style={{
@@ -65,5 +73,28 @@ const styles = StyleSheet.create({
   card: {
     overflow: 'hidden',
     elevation: 3,
+  },
+  playOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
+  playButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 0, 0, 0.85)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  playIcon: {
+    color: '#FFF',
+    fontSize: 24,
+    marginLeft: 4, 
   },
 });

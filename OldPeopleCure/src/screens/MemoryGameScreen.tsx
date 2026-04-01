@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { AccessibleText } from '../components/AccessibleText';
@@ -100,22 +100,24 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
 
   if (!started && difficulty !== 'custom') {
     return (
-      <View style={[globalStyles.container, globalStyles.center, { backgroundColor: colors.background }]}>
-        <AccessibleText style={{ marginBottom: 20 }}>
-          Choose difficulty:
-        </AccessibleText>
+      <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
+        <View style={globalStyles.center}>
+          <AccessibleText style={{ marginBottom: 20 }}>
+            Choose difficulty:
+          </AccessibleText>
 
-        <LargeButton title="Easy" onPress={() => initGame('easy')} style={buttonStyle} />
-        <LargeButton title="Medium" onPress={() => initGame('medium')} style={buttonStyle} />
-        <LargeButton title="Hard" onPress={() => initGame('hard')} style={buttonStyle} />
-        <LargeButton title="Custom" onPress={() => setDifficulty('custom')} style={buttonStyle} />
-      </View>
+          <LargeButton title="Easy" onPress={() => initGame('easy')} style={buttonStyle} />
+          <LargeButton title="Medium" onPress={() => initGame('medium')} style={buttonStyle} />
+          <LargeButton title="Hard" onPress={() => initGame('hard')} style={buttonStyle} />
+          <LargeButton title="Custom" onPress={() => setDifficulty('custom')} style={buttonStyle} />
+        </View>
+      </ScrollView>
     );
   }
 
   if (difficulty === 'custom' && !started) {
     return (
-      <View style={[globalStyles.container, { backgroundColor: colors.background }]}>
+      <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
         <AccessibleText style={{ textAlign: 'center', marginBottom: 20 }}>
           Select emojis for your game:
         </AccessibleText>
@@ -135,7 +137,7 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
                 ]}
                 onPress={() => toggleEmoji(e)}
               >
-                <AccessibleText style={{ fontSize: 40 }}>{e}</AccessibleText>
+                <Text style={{ fontSize: 40, lineHeight: 45 }}>{e}</Text>
               </TouchableOpacity>
             );
           })}
@@ -150,12 +152,12 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
           />
           <LargeButton title="Back" onPress={() => setDifficulty(null)} style={buttonStyle} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 
   return (
-    <View style={[globalStyles.container, { backgroundColor: colors.background }]}>
+    <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
       {isWon ? (
         <View style={globalStyles.center}>
           <AccessibleText bold style={{ fontSize: 40, color: 'green', marginBottom: 20 }}>
@@ -167,7 +169,7 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
           <LargeButton title="Go Back" onPress={() => navigation.goBack()} colorType="secondary" style={buttonStyle} />
         </View>
       ) : (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, paddingBottom: 40 }}>
           <View style={styles.grid}>
             {cards.map((card, index) => (
               <TouchableOpacity
@@ -184,9 +186,9 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
                 ]}
                 onPress={() => flipCard(index)}
               >
-                <AccessibleText style={{ fontSize: 40 }}>
+                <Text style={{ fontSize: 40, lineHeight: 45 }}>
                   {card.isFlipped || card.isMatched ? card.emoji : '❓'}
-                </AccessibleText>
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -205,11 +207,16 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  content: {
+    paddingTop: 40,
+    paddingBottom: 40,
+    flexGrow: 1,
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

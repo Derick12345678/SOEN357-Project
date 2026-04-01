@@ -42,7 +42,7 @@ export const LargeButton: React.FC<LargeButtonProps> = ({ title, onPress, style,
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 80, 
+    minHeight: 64, 
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 16,

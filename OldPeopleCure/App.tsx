@@ -3,11 +3,15 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from './src/utils/ThemeContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppNavigator />
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <AppNavigator />
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

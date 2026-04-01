@@ -46,11 +46,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       };
     }
     return {
-      background: '#F0F8FF', 
-      text: '#000000',      
-      primary: '#0047AB',    
-      secondary: '#486581',
-      border: '#BCCCDC',
+      background: '#F1F5F9', // Slate-100, better depth than white
+      text: '#334155',      
+      primary: '#2563EB',    
+      secondary: '#475569',
+      border: '#E2E8F0',
       surface: '#FFFFFF',
     };
   };

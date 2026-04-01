@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { AccessibleText } from '../components/AccessibleText';
@@ -147,7 +148,8 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
 
   if (!started) {
     return (
-      <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
         <View style={globalStyles.center}>
           <AccessibleText style={{ textAlign: 'center', marginBottom: 20 }}>
             Choose a Sudoku difficulty.
@@ -168,19 +170,16 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
             onPress={() => startGame('hard')}
             style={{ width: 220, marginVertical: 6 }}
           />
-          <LargeButton
-            title="Go Back"
-            onPress={() => navigation.goBack()}
-            colorType="secondary"
-            style={{ width: 220, marginVertical: 6 }}
-          />
+
         </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ScrollView style={[globalStyles.container, { backgroundColor: colors.background }]} contentContainerStyle={styles.content}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
       {isWon ? (
         <View style={globalStyles.center}>
           <AccessibleText bold style={{ fontSize: 40, color: 'green', marginBottom: 20 }}>
@@ -201,12 +200,7 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
             }}
             style={{ width: 220, marginVertical: 6 }}
           />
-          <LargeButton
-            title="Go Back"
-            onPress={() => navigation.goBack()}
-            colorType="secondary"
-            style={{ width: 220, marginVertical: 6 }}
-          />
+
         </View>
       ) : (
         <View style={globalStyles.center}>
@@ -285,7 +279,8 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
           />
         </View>
       )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -296,7 +291,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   board: {
-    borderWidth: 4,
+    borderWidth: 2,
+    borderColor: '#334155',
+    borderRadius: 8,
+    overflow: 'hidden',
     marginBottom: 30,
   },
   row: {

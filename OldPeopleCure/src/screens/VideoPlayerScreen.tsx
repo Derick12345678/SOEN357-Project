@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import * as Haptics from 'expo-haptics';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -40,8 +41,8 @@ const { videoId, title } = route.params;
   }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
       <AccessibleText bold style={styles.title}>
         {title}
       </AccessibleText>
@@ -56,30 +57,26 @@ const { videoId, title } = route.params;
         />
       </View>
 
-      <View style={styles.controls}>
-        <LargeButton
-          title="⬅️ Go Back"
-          onPress={async () => {
-            await Haptics.selectionAsync();
-            navigation.goBack();
-          }}
-          colorType="secondary"
-          style={{ marginTop: 20 }}
-        />
-      </View>
-    </View>
+
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
     padding: 24,
-    justifyContent: 'center',
+    paddingTop: 40,
+    flexGrow: 1,
   },
 
   title: {
-    marginBottom: 12,
+    marginBottom: 24,
+    fontSize: 24,
+    color: '#1E293B',
     textAlign: 'center',
   },
 

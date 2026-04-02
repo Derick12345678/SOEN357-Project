@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { AccessibleText } from '../components/AccessibleText';
@@ -147,38 +148,38 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
 
   if (!started) {
     return (
-      <View style={[globalStyles.container, globalStyles.center, { backgroundColor: colors.background }]}>
-        <AccessibleText style={{ textAlign: 'center', marginBottom: 20 }}>
-          Choose a Sudoku difficulty.
-        </AccessibleText>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
+        <View style={globalStyles.center}>
+          <AccessibleText style={{ textAlign: 'center', marginBottom: 20 }}>
+            Choose a Sudoku difficulty.
+          </AccessibleText>
 
-        <LargeButton
-          title="Easy"
-          onPress={() => startGame('easy')}
-          style={{ width: 220, marginVertical: 6 }}
-        />
-        <LargeButton
-          title="Medium"
-          onPress={() => startGame('medium')}
-          style={{ width: 220, marginVertical: 6 }}
-        />
-        <LargeButton
-          title="Hard"
-          onPress={() => startGame('hard')}
-          style={{ width: 220, marginVertical: 6 }}
-        />
-        <LargeButton
-          title="Go Back"
-          onPress={() => navigation.goBack()}
-          colorType="secondary"
-          style={{ width: 220, marginVertical: 6 }}
-        />
-      </View>
+          <LargeButton
+            title="Easy"
+            onPress={() => startGame('easy')}
+            style={{ width: 220, marginVertical: 6 }}
+          />
+          <LargeButton
+            title="Medium"
+            onPress={() => startGame('medium')}
+            style={{ width: 220, marginVertical: 6 }}
+          />
+          <LargeButton
+            title="Hard"
+            onPress={() => startGame('hard')}
+            style={{ width: 220, marginVertical: 6 }}
+          />
+
+        </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={[globalStyles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
       {isWon ? (
         <View style={globalStyles.center}>
           <AccessibleText bold style={{ fontSize: 40, color: 'green', marginBottom: 20 }}>
@@ -199,12 +200,7 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
             }}
             style={{ width: 220, marginVertical: 6 }}
           />
-          <LargeButton
-            title="Go Back"
-            onPress={() => navigation.goBack()}
-            colorType="secondary"
-            style={{ width: 220, marginVertical: 6 }}
-          />
+
         </View>
       ) : (
         <View style={globalStyles.center}>
@@ -283,13 +279,22 @@ export const SudokuScreen: React.FC<Props> = ({ navigation }) => {
           />
         </View>
       )}
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  content: {
+    paddingTop: 40,
+    paddingBottom: 40,
+    flexGrow: 1,
+  },
   board: {
-    borderWidth: 4,
+    borderWidth: 2,
+    borderColor: '#334155',
+    borderRadius: 8,
+    overflow: 'hidden',
     marginBottom: 30,
   },
   row: {

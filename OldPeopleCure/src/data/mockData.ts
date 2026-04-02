@@ -12,6 +12,15 @@ export type Video = {
   title: string;
   thumbnail: string;
   videoUrl: string;
+  category?: string;
+};
+
+export type Game = {
+  id: string;
+  title: string;
+  thumbnail: string;
+  category: string;
+  routeName: string;
 };
 
 export const mockArticles = [
@@ -34,7 +43,7 @@ export const mockArticles = [
   {
     id: '3',
     title: 'Fun Facts About Space',
-    category: 'Fun Facts',
+    category: 'Science',
     preview: 'Did you know the sun makes up 99% of the solar system?',
     thumbnail: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=800&q=80',
     content: 'Space is full of amazing wonders.\n\nDid you know that the Sun accounts for 99.86% of the mass in the solar system?\n\nAlso, one million Earths could fit inside the Sun.\n\nAnother fun fact is that the footprints left by astronauts on the Moon will stay there for millions of years because there is no wind to blow them away.',
@@ -44,38 +53,54 @@ export const mockArticles = [
 export const mockVideos = [
   {
     id: '1',
-    title: 'Shark Tank',
-    thumbnail: 'https://img.youtube.com/vi/7TEx2oXFDBM/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=7TEx2oXFDBM',
+    title: 'The Beauty of the Swiss Alps',
+    thumbnail: 'https://img.youtube.com/vi/linlz7-Pnvw/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=linlz7-Pnvw',
+    category: 'Nature',
   },
   {
     id: '2',
-    title: 'Call your name (song)',
-    thumbnail: 'https://img.youtube.com/vi/glCgRS8eGhs/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=glCgRS8eGhs',
+    title: 'The Colors of Costa Rica (4K)',
+    thumbnail: 'https://img.youtube.com/vi/LXb3EKWsInQ/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=LXb3EKWsInQ',
+    category: 'Nature',
   },
   {
     id: '3',
-    title: 'Mac vs Windows',
-    thumbnail: 'https://img.youtube.com/vi/aJSK3HZlvnU/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=aJSK3HZlvnU',
+    title: 'How Trees Talk to Each Other',
+    thumbnail: 'https://img.youtube.com/vi/Un2yBgIAxYs/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=Un2yBgIAxYs',
+    category: 'Science',
   },
   {
     id: '4',
-    title: 'Veritasium Paradox',
-    thumbnail: 'https://img.youtube.com/vi/Ol18JoeXlVI/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=Ol18JoeXlVI',
+    title: 'The Secrets of Deep Sleep',
+    thumbnail: 'https://img.youtube.com/vi/5MuIMqhT8DM/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=5MuIMqhT8DM',
+    category: 'Health',
   },
   {
     id: '5',
-    title: 'UConn vs Duke Ending',
-    thumbnail: 'https://img.youtube.com/vi/OCCPHNKURVk/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=OCCPHNKURVk',
+    title: 'Classic Classical Music: Mozart',
+    thumbnail: 'https://img.youtube.com/vi/Rb0UmrCXxVA/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=Rb0UmrCXxVA',
+    category: 'Arts',
+  },
+];
+
+export const mockGames: Game[] = [
+  {
+    id: 'game-1',
+    title: 'Sudoku',
+    thumbnail: 'https://it.mathworks.com/help/examples/optim/win64/SudokuExample_01.png',
+    category: 'Logic',
+    routeName: 'Sudoku',
   },
   {
-    id: '6',
-    title: 'Hans Zimmer Soundtrack',
-    thumbnail: 'https://img.youtube.com/vi/IqiTJK_uzUY/hqdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=IqiTJK_uzUY',
-  },
+    id: 'game-2',
+    title: 'Memory Game',
+    thumbnail: 'https://www.calendarclub.ca/cdn/shop/files/689196507342_2.jpg?v=1725971971&width=2048',
+    category: 'Memory',
+    routeName: 'MemoryGame',
+  }
 ];

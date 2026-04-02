@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { AccessibleText } from '../components/AccessibleText';
@@ -19,23 +20,19 @@ export const ArticleDetailScreen: React.FC<Props> = ({ route, navigation }) => {
   if (!article) return <View><AccessibleText>Not Found</AccessibleText></View>;
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <View style={{ flex: 1 }}>
       {/* Utility Bar */}
 
       <ScrollView style={[globalStyles.container]} contentContainerStyle={styles.content}>
-        <AccessibleText baseSize={32} bold style={styles.title}>{article.title}</AccessibleText>
-        <AccessibleText style={styles.category}>Category: {article.category}</AccessibleText>
+        <AccessibleText baseSize={32} bold style={[styles.title, { color: colors.text }]}>{article.title}</AccessibleText>
+        <AccessibleText style={[styles.category, { color: colors.subtext }]}>Category: {article.category}</AccessibleText>
 
         <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
         <AccessibleText style={styles.body}>{article.content}</AccessibleText>
 
-        <LargeButton
-          title="⬅️ Go Back"
-          onPress={() => navigation.goBack()}
-          colorType="secondary"
-          style={{ marginTop: 40 }}
-        />
+
       </ScrollView>
       <View style={[styles.utilsBar, { backgroundColor: colors.surface, borderBottomColor: colors.border, borderBottomWidth: 1 }]}>
         <AccessibleText bold>Text Size:</AccessibleText>
@@ -45,7 +42,8 @@ export const ArticleDetailScreen: React.FC<Props> = ({ route, navigation }) => {
           <LargeButton title="A+" onPress={increaseFont} style={styles.smallBtn} disabled={increaseFontButtonDisabled} />
         </View>
       </View>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -68,13 +66,15 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingBottom: 60,
+    paddingHorizontal: 24,
+    paddingTop: 20,
   },
   title: {
     marginBottom: 8, 
   },
   category: {
     marginBottom: 20,
-    fontStyle: 'italic',
+    fontSize: 16,
   },
   divider: {
     height: 2,

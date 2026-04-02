@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Image, ImageSourcePropType, Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { AccessibleText } from "./AccessibleText";
 import { useTheme } from "../utils/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
@@ -14,10 +14,12 @@ type NavigationProp = NativeStackNavigationProp<
 interface ArticleCardProps {
   article: Article;
   style?: StyleProp<ViewStyle>;
+  compact?: boolean;
+  bgImage?: ImageSourcePropType;
 }
 
-export const ArticleCard: React.FC<ArticleCardProps> = ({ article, style }) => {
-  const { getColors } = useTheme();
+export const ArticleCard: React.FC<ArticleCardProps> = ({ article, style, compact = false, bgImage }) => {
+  const { getColors, fontSizeScale } = useTheme();
   const colors = getColors();
 
   const navigation = useNavigation<NavigationProp>();
@@ -26,10 +28,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, style }) => {
     <Pressable
       style={({ pressed }) => [
         styles.card,
+        compact && styles.compactCard,
         style,
         {
           backgroundColor: colors.surface,
           borderColor: colors.border,
+          borderWidth: colors.primary === '#FFFF00' ? 3 : 1,
           opacity: pressed ? 0.9 : 1,
         },
       ]}
@@ -39,14 +43,34 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, style }) => {
         })
       }
     >
-      <Image source={{ uri: article.thumbnail }} style={styles.image} />
+      {bgImage && (
+        <Image 
+          source={bgImage} 
+          style={styles.bgWatermark} 
+          resizeMode="contain"
+          tintColor="rgba(0,0,0,0.05)"
+        />
+      )}
+      <Image 
+        source={{ uri: article.thumbnail }} 
+        style={compact ? styles.compactImage : styles.image} 
+      />
 
-      <View style={styles.overlay}>
-        <AccessibleText bold style={styles.title} baseSize={22}>
+      <View style={compact ? styles.compactTextContainer : styles.textContainer}>
+        <AccessibleText 
+          numberOfLines={2} 
+          bold 
+          style={{ color: colors.text, marginBottom: compact ? 4 : 8 * fontSizeScale, zIndex: 1 }} 
+          baseSize={compact ? 16 : 18}
+        >
           {article.title}
         </AccessibleText>
 
-        <AccessibleText style={styles.category}>
+        <AccessibleText 
+          numberOfLines={compact ? 1 : 2} 
+          baseSize={compact ? 12 : 14} 
+          style={{ color: colors.subtext, zIndex: 1 }}
+        >
           {article.category}
         </AccessibleText>
       </View>
@@ -56,34 +80,44 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, style }) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 16,
+    borderRadius: 20,
     overflow: "hidden",
     marginBottom: 16,
-    borderWidth: 1,
-    elevation: 4,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    height: 250,
   },
-
+  compactCard: {
+    flexDirection: 'row',
+    height: 100,
+  },
+  bgWatermark: {
+    position: 'absolute',
+    right: -20,
+    bottom: -20,
+    width: '40%',
+    height: '80%',
+    opacity: 0.08,
+  },
   image: {
     width: "100%",
-    height: 360,
+    height: 140,
   },
-
-  overlay: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+  compactImage: {
+    width: 100,
+    height: "100%",
+  },
+  textContainer: {
     padding: 16,
-    backgroundColor: "rgba(0,0,0,0.45)",
+    flex: 1,
+    justifyContent: 'space-between',
   },
-
-  title: {
-    color: "#fff",
-    marginBottom: 4,
+  compactTextContainer: {
+    padding: 12,
+    flex: 1,
+    justifyContent: 'center',
   },
-
-  category: {
-    color: "#ddd",
-    fontSize: 14,
-  },
-});
+});

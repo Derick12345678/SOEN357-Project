@@ -61,7 +61,7 @@ export const GameCard: React.FC<GameCardProps> = ({ game, bgImage, compact = fal
         <AccessibleText 
           numberOfLines={1} 
           baseSize={compact ? 12 : 14} 
-          style={{ color: '#888', zIndex: 1 }}
+          style={{ color: colors.subtext, zIndex: 1 }}
         >
           {game.category}
         </AccessibleText>

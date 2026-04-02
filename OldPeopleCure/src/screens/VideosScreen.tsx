@@ -37,7 +37,7 @@ export const VideosScreen: React.FC<Props> = ({ navigation }) => {
         contentContainerStyle={{ paddingBottom: 40 }}
         ListHeaderComponent={
           <View style={styles.headerContainer}>
-            <AccessibleText style={styles.title} bold>Videos</AccessibleText>
+            <AccessibleText style={[styles.title, { color: colors.text }]} bold>Videos</AccessibleText>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesWrapper} contentContainerStyle={styles.categoriesContent}>
               {CATEGORIES.map(cat => {
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    color: '#1E293B',
     marginBottom: 16,
   },
   categoriesWrapper: {
@@ -115,6 +114,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 10,
     fontSize: 20,
-    color: '#334155',
   },
 });

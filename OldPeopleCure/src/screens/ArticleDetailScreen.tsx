@@ -25,8 +25,8 @@ export const ArticleDetailScreen: React.FC<Props> = ({ route, navigation }) => {
       {/* Utility Bar */}
 
       <ScrollView style={[globalStyles.container]} contentContainerStyle={styles.content}>
-        <AccessibleText baseSize={32} bold style={styles.title}>{article.title}</AccessibleText>
-        <AccessibleText style={styles.category}>Category: {article.category}</AccessibleText>
+        <AccessibleText baseSize={32} bold style={[styles.title, { color: colors.text }]}>{article.title}</AccessibleText>
+        <AccessibleText style={[styles.category, { color: colors.subtext }]}>Category: {article.category}</AccessibleText>
 
         <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
@@ -71,12 +71,10 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 8, 
-    color: '#1E293B',
   },
   category: {
     marginBottom: 20,
     fontSize: 16,
-    color: '#64748B',
   },
   divider: {
     height: 2,

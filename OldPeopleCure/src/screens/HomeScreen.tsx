@@ -15,7 +15,7 @@ interface Props {
   navigation: HomeScreenNavigationProp;
 }
 
-import { BackgroundGradient } from '../components/BackgroundGradient';
+// import { BackgroundGradient } from '../components/BackgroundGradient';
 
 const booksTexture = require('../../assets/textures/books.png');
 const videosTexture = require('../../assets/textures/videos.png');
@@ -29,7 +29,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const canScroll = fontSizeScale > 1.2;
 
   return (
-    <BackgroundGradient colors={['#F1F5F9', '#DBEAFE']}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <SafeAreaView style={{ flex: 1 }} edges = {['top']}>
         <ScrollView 
           style={{ flex: 1 }} 
@@ -38,16 +38,16 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.header}>
-            <AccessibleText style={styles.greeting} bold>
+            <AccessibleText style={[styles.greeting, { color: colors.text }]} bold>
               Welcome back!
             </AccessibleText>
-            <AccessibleText style={styles.subtitle}>
+            <AccessibleText style={[styles.subtitle, { color: colors.subtext }]}>
               What would you like to do today?
             </AccessibleText>
           </View>
 
           <View style={styles.section}>
-            <AccessibleText style={styles.sectionTitle} bold>Featured Content</AccessibleText>
+            <AccessibleText style={[styles.sectionTitle, { color: colors.text }]} bold>Featured Content</AccessibleText>
             {featuredArticles.map((article) => (
               <ArticleCard 
                 key={article.id} 
@@ -60,7 +60,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </View>
 
           <View style={styles.section}>
-            <AccessibleText style={styles.sectionTitle} bold>Categories</AccessibleText>
+            <AccessibleText style={[styles.sectionTitle, { color: colors.text }]} bold>Categories</AccessibleText>
             <View style={styles.buttonRow}>
               <LargeButton
                 title="Articles"
@@ -96,7 +96,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </BackgroundGradient>
+    </View>
   );
 };
 
@@ -113,12 +113,10 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 28, 
-    color: '#0F172A',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: '#64748B',
   },
   section: {
     marginBottom: 20,
@@ -126,7 +124,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     marginBottom: 12,
-    color: '#334155',
   },
   buttonRow: {
     flexDirection: 'row',

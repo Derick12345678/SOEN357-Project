@@ -14,7 +14,7 @@ export const SettingsScreen: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
       <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
-      <AccessibleText style={styles.description}>
+      <AccessibleText style={[styles.description, { color: colors.subtext }]}>
         Adjust the app to make it easier for you to use.
       </AccessibleText>
       
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   description: {
     marginBottom: 30,
     fontSize: 18,
-    color: '#64748B',
   },
   section: {
     padding: 24,

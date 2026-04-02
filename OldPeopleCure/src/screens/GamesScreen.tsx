@@ -8,7 +8,7 @@ import { useTheme } from '../utils/ThemeContext';
 import { FlatGrid } from 'react-native-super-grid';
 import { GameCard } from '../components/GameCard';
 import { mockGames } from '../data/mockData';
-import { BackgroundGradient } from '../components/BackgroundGradient';
+// import { BackgroundGradient } from '../components/BackgroundGradient';
 
 type GamesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Games'>;
 
@@ -29,11 +29,11 @@ export const GamesScreen: React.FC<Props> = ({ navigation }) => {
     : mockGames.filter(g => g.category === selectedCategory);
 
   return (
-    <BackgroundGradient colors={['#F1F5F9', '#E0F2FE']}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <SafeAreaView style={{ flex: 1 }} edges = {['top']}>
         <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
           <View style={styles.headerContainer}>
-            <AccessibleText style={styles.title} bold>Games</AccessibleText>
+            <AccessibleText style={[styles.title, { color: colors.text }]} bold>Games</AccessibleText>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesWrapper} contentContainerStyle={styles.categoriesContent}>
               {CATEGORIES.map(cat => {
@@ -76,7 +76,7 @@ export const GamesScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </BackgroundGradient>
+    </View>
   );
 };
 
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    color: '#0F172A',
     marginBottom: 24,
   },
   categoriesWrapper: {

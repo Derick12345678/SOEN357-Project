@@ -6,7 +6,7 @@ interface ThemeContextType {
   setFontSizeScale: (scale: number) => void;
   highContrast: boolean;
   setHighContrast: (enabled: boolean) => void;
-  getColors: () => { background: string; text: string; primary: string; secondary: string; border: string; surface: string };
+  getColors: () => { background: string; text: string; subtext: string; primary: string; secondary: string; border: string; surface: string };
   increaseFont: () => void;
   increaseFontButtonDisabled: boolean;
   decreaseFont: () => void;
@@ -39,6 +39,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       return {
         background: '#000000',
         text: '#FFFFFF',
+        subtext: '#E2E8F0', // Slate-200
         primary: '#FFFF00',
         secondary: '#00FFFF',
         border: '#FFFFFF',
@@ -48,6 +49,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     return {
       background: '#F1F5F9', // Slate-100, better depth than white
       text: '#334155',      
+      subtext: '#64748B',    // Slate-500
       primary: '#2563EB',    
       secondary: '#475569',
       border: '#E2E8F0',

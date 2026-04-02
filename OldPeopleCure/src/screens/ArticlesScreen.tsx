@@ -39,7 +39,7 @@ export const ArticlesScreen: React.FC<Props> = ({ navigation }) => {
 
         ListHeaderComponent={
           <View style={styles.headerContainer}>
-            <AccessibleText style={styles.title} bold>Articles</AccessibleText>
+            <AccessibleText style={[styles.title, { color: colors.text }]} bold>Articles</AccessibleText>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesWrapper} contentContainerStyle={styles.categoriesContent}>
               {CATEGORIES.map(cat => {
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    color: '#1E293B',
     marginBottom: 24,
   },
   categoriesWrapper: {

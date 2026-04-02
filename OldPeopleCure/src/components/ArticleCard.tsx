@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Image, ImageSourcePropType, Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { AccessibleText } from "./AccessibleText";
 import { useTheme } from "../utils/ThemeContext";
 import { useNavigation } from "@react-navigation/native";
@@ -69,7 +69,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, style, compac
         <AccessibleText 
           numberOfLines={compact ? 1 : 2} 
           baseSize={compact ? 12 : 14} 
-          style={{ color: '#888', zIndex: 1 }}
+          style={{ color: colors.subtext, zIndex: 1 }}
         >
           {article.category}
         </AccessibleText>

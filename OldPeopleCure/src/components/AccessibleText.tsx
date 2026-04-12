@@ -19,8 +19,8 @@ export const AccessibleText: React.FC<AccessibleTextProps> = ({ children, style,
         {
           fontSize: baseSize * fontSizeScale,
           color: colors.text,
-          fontWeight: bold ? 'bold' : 'normal',
-          lineHeight: baseSize * fontSizeScale * 1.8, // if too small then some text will be cut off
+          fontWeight: bold ? '600' : '400',
+          lineHeight: baseSize * fontSizeScale * 1.5,
         },
         style,
       ]}

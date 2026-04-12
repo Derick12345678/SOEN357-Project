@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TextInput, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { AccessibleText } from '../components/AccessibleText';
 import { useTheme } from '../utils/ThemeContext';
-import { globalStyles } from '../styles/GlobalStyles';
 import { VideoCard } from '../components/VideoCard';
 import { FlatGrid } from 'react-native-super-grid';
+import { mockVideos } from '../data/mockData';
 
 type VideosScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Videos'>;
 
@@ -14,102 +15,61 @@ interface Props {
   navigation: VideosScreenNavigationProp;
 }
 
+const CATEGORIES = ['All', 'Health', 'Science', 'Nature', 'Arts'];
+
+const videosTexture = require('../../assets/textures/videos.png');
+
 export const VideosScreen: React.FC<Props> = ({ navigation }) => {
   const { getColors, fontSizeScale } = useTheme();
   const colors = getColors();
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
-  const [videos, setVideos] = useState<any[]>([]);
-  const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const fetchVideos = async (searchQuery: string, searching = false) => {
-    setLoading(true);
-    setIsSearching(searching);
-
-    try {
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-          searchQuery
-        )}&type=video&maxResults=12&key=AIzaSyAZGziQNViLBPCHz3Gy5cZPeQot24lUMsM`
-      );
-
-      const data = await res.json();
-
-      const formatted = data.items
-        .filter((item: any) => item.id.videoId)
-        .map((item: any) => ({
-          id: item.id.videoId,
-          title: item.snippet.title,
-          thumbnail: item.snippet.thumbnails.high?.url,
-          videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-        }));
-
-      setVideos(formatted);
-    } catch (err) {
-      console.log(err);
-    }
-
-    setLoading(false);
-  };
-
-  const searchYouTube = () => {
-    if (!query.trim()) return;
-    fetchVideos(query, true);
-  };
-
-  useEffect(() => {
-    fetchVideos('trending videos');
-  }, []);
+  const filteredVideos = selectedCategory === 'All' 
+    ? mockVideos 
+    : mockVideos.filter(v => v.category === selectedCategory);
 
   return (
-      
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
       <FlatGrid
         itemDimension={160 * fontSizeScale}
-        data={videos}
+        data={filteredVideos}
         spacing={12 * fontSizeScale}
         contentContainerStyle={{ paddingBottom: 40 }}
         ListHeaderComponent={
-          <View style={{paddingHorizontal: 16}}>
-            <AccessibleText
-              style={[
-                styles.mainTitle,
-                { fontSize: 22 * fontSizeScale, color: colors.text }
-              ]}
-            >
-              Discover Videos
+          <View style={styles.headerContainer}>
+            <AccessibleText style={[styles.title, { color: colors.text }]} bold>Videos</AccessibleText>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesWrapper} contentContainerStyle={styles.categoriesContent}>
+              {CATEGORIES.map(cat => {
+                const isActive = selectedCategory === cat;
+                return (
+                  <TouchableOpacity
+                    key={cat}
+                    onPress={() => setSelectedCategory(cat)}
+                    activeOpacity={0.7}
+                    style={[
+                      styles.categoryPill,
+                      {
+                        backgroundColor: isActive ? colors.primary : colors.surface,
+                        borderColor: isActive ? colors.primary : colors.border,
+                      }
+                    ]}
+                  >
+                    <AccessibleText 
+                      baseSize={15} 
+                      style={{ color: isActive ? (colors.primary === '#FFFF00' ? '#000000' : '#FFFFFF') : colors.text }}
+                      bold={isActive}
+                    >
+                      {cat}
+                    </AccessibleText>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+
+            <AccessibleText style={[styles.mainTitle, { fontSize: 22 * fontSizeScale, color: colors.text }]}>
+              Recommended Documentaries
             </AccessibleText>
-
-            <TextInput
-              placeholder="Search YouTube..."
-              placeholderTextColor="#888"
-              value={query}
-              onChangeText={setQuery}
-              onSubmitEditing={searchYouTube}
-              style={[
-                styles.input,
-                {
-                  borderColor: colors.border,
-                  color: colors.text,
-                  padding: 12 * fontSizeScale,
-                  borderRadius: 12 * fontSizeScale,
-                  fontSize: 14 * fontSizeScale,
-                },
-              ]}
-            />
-
-            <AccessibleText
-              style={[
-                styles.sectionTitle,
-                { fontSize: 16 * fontSizeScale, color: colors.text }
-              ]}
-            >
-              {isSearching ? 'Search Results' : 'Recommended'}
-            </AccessibleText>
-
-            {loading && (
-              <ActivityIndicator size="large" style={{ marginVertical: 20 }} />
-            )}
           </View>
         }
         renderItem={({ item }) => (
@@ -117,24 +77,42 @@ export const VideosScreen: React.FC<Props> = ({ navigation }) => {
             video={item}
             fontSizeScale={fontSizeScale}
             navigation={navigation}
+            bgImage={videosTexture}
           />
         )}
       />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainTitle: {
-    fontWeight: '700',
-    marginBottom: 12,
-    textAlign: 'center',
+  headerContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 10,
+    marginTop: 20,
   },
-  input: {
-    borderWidth: 1,
+  title: {
+    fontSize: 28,
+    marginBottom: 16,
+  },
+  categoriesWrapper: {
+    flexDirection: 'row',
     marginBottom: 20,
   },
-  sectionTitle: {
-    fontWeight: '600',
-    marginBottom: 10,
+  categoriesContent: {
+    paddingRight: 16,
+    gap: 10,
   },
-});
+  categoryPill: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 24,
+    borderWidth: 1,
+    marginRight: 10,
+  },
+  mainTitle: {
+    fontWeight: '700',
+    marginBottom: 10,
+    fontSize: 20,
+  },
+});

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { AccessibleText } from '../components/AccessibleText';
@@ -100,22 +101,27 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
 
   if (!started && difficulty !== 'custom') {
     return (
-      <View style={[globalStyles.container, globalStyles.center, { backgroundColor: colors.background }]}>
-        <AccessibleText style={{ marginBottom: 20 }}>
-          Choose difficulty:
-        </AccessibleText>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
+        <View style={globalStyles.center}>
+          <AccessibleText style={{ marginBottom: 20 }}>
+            Choose difficulty:
+          </AccessibleText>
 
-        <LargeButton title="Easy" onPress={() => initGame('easy')} style={buttonStyle} />
-        <LargeButton title="Medium" onPress={() => initGame('medium')} style={buttonStyle} />
-        <LargeButton title="Hard" onPress={() => initGame('hard')} style={buttonStyle} />
-        <LargeButton title="Custom" onPress={() => setDifficulty('custom')} style={buttonStyle} />
-      </View>
+          <LargeButton title="Easy" onPress={() => initGame('easy')} style={buttonStyle} />
+          <LargeButton title="Medium" onPress={() => initGame('medium')} style={buttonStyle} />
+          <LargeButton title="Hard" onPress={() => initGame('hard')} style={buttonStyle} />
+          <LargeButton title="Custom" onPress={() => setDifficulty('custom')} style={buttonStyle} />
+        </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 
   if (difficulty === 'custom' && !started) {
     return (
-      <View style={[globalStyles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
         <AccessibleText style={{ textAlign: 'center', marginBottom: 20 }}>
           Select emojis for your game:
         </AccessibleText>
@@ -135,7 +141,7 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
                 ]}
                 onPress={() => toggleEmoji(e)}
               >
-                <AccessibleText style={{ fontSize: 40 }}>{e}</AccessibleText>
+                <Text style={{ fontSize: 40, lineHeight: 45 }}>{e}</Text>
               </TouchableOpacity>
             );
           })}
@@ -148,14 +154,15 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
             disabled={selectedEmojis.length < 2}
             style={buttonStyle}
           />
-          <LargeButton title="Back" onPress={() => setDifficulty(null)} style={buttonStyle} />
         </View>
-      </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={[globalStyles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
       {isWon ? (
         <View style={globalStyles.center}>
           <AccessibleText bold style={{ fontSize: 40, color: 'green', marginBottom: 20 }}>
@@ -164,10 +171,10 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
 
           <LargeButton title="Play Again" onPress={() => initGame(difficulty!, selectedEmojis)} style={buttonStyle} />
           <LargeButton title="Change Mode" onPress={() => { setStarted(false); setDifficulty(null); }} style={buttonStyle} />
-          <LargeButton title="Go Back" onPress={() => navigation.goBack()} colorType="secondary" style={buttonStyle} />
+
         </View>
       ) : (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, paddingBottom: 40 }}>
           <View style={styles.grid}>
             {cards.map((card, index) => (
               <TouchableOpacity
@@ -184,32 +191,26 @@ export const MemoryGameScreen: React.FC<Props> = ({ navigation }) => {
                 ]}
                 onPress={() => flipCard(index)}
               >
-                <AccessibleText style={{ fontSize: 40 }}>
+                <Text style={{ fontSize: 40, lineHeight: 45 }}>
                   {card.isFlipped || card.isMatched ? card.emoji : '❓'}
-                </AccessibleText>
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
-          <View style={{ alignItems: 'center', marginTop: 10 }}>
-            <LargeButton
-              title="Quit Game"
-              onPress={() => {
-                setStarted(false);
-                setDifficulty(null);
-                setIsWon(false);
-                setSelectedEmojis([]);
-              }}
-              colorType="secondary"
-              style={buttonStyle}
-            />
-          </View>
+
         </View>
       )}
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  content: {
+    paddingTop: 40,
+    paddingBottom: 40,
+    flexGrow: 1,
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -221,8 +222,14 @@ const styles = StyleSheet.create({
     minHeight: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 12,
-    borderWidth: 2,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
     margin: 6,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
 });
